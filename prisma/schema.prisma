@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SensorData {
+  id                Int      @id @default(autoincrement()) 
+  timestamp         DateTime @default(now()) 
+  leak_status       Boolean  
+  high_consumption  Boolean 
+  valve_status      Boolean        
+  location          String   @db.VarChar(100) 
+  user_id           Int      
+  
+  user        Users @relation(fields: [user_id], references: [id]) 
+  
+  @@map("datos_sensores") 
+}
+
+model Roles {
+  id             Int      @id @default(autoincrement()) 
+  user_id        Int      @unique 
+  role            String   
+  creacion_date  DateTime @default(now()) 
+
+  user           Users    @relation(fields: [user_id], references: [id])
+  
+  @@map("roles") 
+}
+
+model Users {
+  id       Int      @id @default(autoincrement()) // Identificador único
+  username String   @unique                      // Nombre de usuario único
+  password String                               // Contraseña
+  email    String   @unique                      // Email único
+  locked   Boolean  @default(false)              // Indica si la cuenta está bloqueada
+  disabled Boolean  @default(false)              // Indica si la cuenta está deshabilitada
+  
+  roles    Roles?  // Relación uno a muchos con la tabla Roles
+  
+  sensors SensorData[]
+  @@map("users") // Mapea el modelo a la tabla SQL correspondiente
+}
+
+
