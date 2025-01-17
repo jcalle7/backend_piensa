@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';  // Asegúrate de que P
   imports: [PrismaModule],  // Asegúrate de que PrismaModule esté importado aquí si usas Prisma
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}

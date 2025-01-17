@@ -2,22 +2,18 @@ import { Controller, Get, Post, Body, Param, BadRequestException } from '@nestjs
 import { UsersService } from './users.service';  
 import { LoginDto } from 'src/auth/dto/login.dto';  // Importa el DTO de login
 import { RegisterDto } from 'src/auth/dto/register.dto';
-import * as bcrypt from 'bcrypt'; // Para comparar contraseñas
+/*import * as bcrypt from 'bcrypt'; // Para comparar contraseñas*/
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('register')
+  @Post('')
   async register(@Body() registerDto: RegisterDto) {
-    const user = await this.usersService.create(registerDto);
-    return {
-      message: 'User created successfully',
-      user,
-    };
+    return this.usersService.create(registerDto);
   }
 
-  @Post('login')
+  /*@Post('')
   async login(@Body() loginDto: LoginDto) {
     const { username, password } = loginDto;
     const user = await this.usersService.findByUsername(username);
@@ -39,7 +35,7 @@ export class UsersController {
         email: user.email,
       },
     };
-  }
+  }*/
 
   @Get(':id')
   async getUserById(@Param('id') id: number) {
