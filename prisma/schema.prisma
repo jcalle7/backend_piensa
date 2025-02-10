@@ -20,7 +20,9 @@ model SensorData {
   high_consumption  Boolean 
   valve_status      Boolean        
   location          String   @db.VarChar(100) 
-  user_id           Int      
+  user_id           Int   
+  flowRate        Float    // Añadir esta línea   
+  totalLiters       Float    
   
   user        Users @relation(fields: [user_id], references: [id]) 
   

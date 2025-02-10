@@ -47,3 +47,4 @@ ALTER TABLE "datos_sensores" ADD CONSTRAINT "datos_sensores_user_id_fkey" FOREIG
 
 -- AddForeignKey
 ALTER TABLE "roles" ADD CONSTRAINT "roles_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
