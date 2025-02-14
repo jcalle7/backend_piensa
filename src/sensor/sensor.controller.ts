@@ -21,11 +21,19 @@ export class SensorController {
     return this.sensorService.findLatest();
   }
 
-    @Post('toggle-valve')
+  @Post('toggle-valve')
   async toggleValve(@Body() body: { status: boolean }) {
     
     const newStatus = body.status;
+
+    await this.sensorService.updateValveStatus(newStatus);
      
     return { status: newStatus };
+  }
+
+  @Get('valve-status')
+  async getValveStatus() {
+    const status = await this.sensorService.getValveStatus();
+    return this.sensorService.getValveStatus();
   }
 }

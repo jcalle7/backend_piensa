@@ -23,4 +23,18 @@ export class SensorService {
       },
     });
   }
+
+  async updateValveStatus(status: boolean) {
+    return this.prisma.sensorData.updateMany({
+      data: { valve_status: status },
+    });
+  }
+
+  async getValveStatus() {
+    // Obtener el estado actual de la válvula
+    const latestData = await this.prisma.sensorData.findFirst({
+      orderBy: { timestamp: 'desc' },
+    });
+    return latestData?.valve_status || false; // Devuelve false si no hay datos
+  }
 }
